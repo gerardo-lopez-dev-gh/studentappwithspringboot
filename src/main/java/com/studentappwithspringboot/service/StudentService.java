@@ -17,7 +17,9 @@ public class StudentService implements IStudentService {
 
   @Override
   public Student findStudentById(Long id) {
-    Optional<Student> student = studentRepository.findById(id); return (student.orElse(null));}
+    Optional<Student> student = studentRepository.findById(id);
+    return (student.orElse(null));
+  }
 
   @Override
   public Student saveStudent(Student student) {
