@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Formatea todos los archivos Java modificados antes de hacer commit usando google-java-format
+
+# Encuentra los archivos Java staged para commit
+FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.java$')
+
+if [ -z "$FILES" ]; then
+  exit 0
+fi
+
+# Formatea cada archivo encontrado
+for file in $FILES; do
+  if [ -f "$file" ]; then
+    google-java-format -i "$file"
+    git add "$file"
+  fi
+done
+
+exit 0
+
