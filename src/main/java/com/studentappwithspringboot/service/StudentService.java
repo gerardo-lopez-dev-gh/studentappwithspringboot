@@ -11,12 +11,13 @@ public class StudentService implements IStudentService {
   private StudentRepository studentRepository;
 
   @Override
-  public List<Student> getAllStudents() {return studentRepository.findAll();}
+  public List<Student> getAllStudents() {
+    return studentRepository.findAll();
+  }
 
   @Override
   public Student findStudentById(Long id) {
-    Optional<Student> student = studentRepository.findById(id);return (student.orElse(null));
-  }
+    Optional<Student> student = studentRepository.findById(id);return (student.orElse(null));}
 
   @Override
   public Student saveStudent(Student student) {
