@@ -23,9 +23,11 @@ public class StudentService implements IStudentService {
 
   @Override
   public Student saveStudent(Student student) {
-    return null;
+    return studentRepository.save(student);
   }
 
   @Override
-  public void deleteStudent(Student student) {}
+  public void deleteStudent(Student student) {
+    studentRepository.delete(student);
+  }
 }
