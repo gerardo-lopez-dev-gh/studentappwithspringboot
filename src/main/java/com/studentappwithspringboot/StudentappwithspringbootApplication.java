@@ -66,7 +66,7 @@ public class StudentappwithspringbootApplication implements CommandLineRunner {
         if (students.isEmpty()) {
           looger.info("No students found." + ln);
         } else {
-          students.forEach((student -> looger.info(student.toString())));
+          students.forEach((student -> looger.info(student.toString() + ln)));
         }
       }
       case 2 -> {
@@ -82,13 +82,13 @@ public class StudentappwithspringbootApplication implements CommandLineRunner {
       case 3 -> {
         looger.info("Adding a new student:" + ln);
         Student newStudent = new Student();
-        System.out.print("Name: ");
+        looger.info("Name: ");
         newStudent.setName(scanner.next());
-        System.out.print("Last Name: ");
+        looger.info("Last Name: ");
         newStudent.setLastName(scanner.next());
-        System.out.print("Phone Number: ");
+        looger.info("Phone Number: ");
         newStudent.setPhoneNumber(scanner.next());
-        System.out.print("Email: ");
+        looger.info("Email: ");
         newStudent.setEmail(scanner.next());
         Student savedStudent = studentService.saveStudent(newStudent);
         if (savedStudent != null) {
@@ -100,50 +100,53 @@ public class StudentappwithspringbootApplication implements CommandLineRunner {
       case 4 -> {
         looger.info("Updating a student:" + ln);
         Student updateStudent = new Student();
-        System.out.print("Enter student ID to update: " + ln);
+        looger.info("Enter student ID to update: " + ln);
         updateStudent.setId(scanner.nextLong());
         Student existingStudent = studentService.findStudentById(updateStudent.getId());
         updateStudentMethod(scanner, studentService, existingStudent, updateStudent);
       }
       case 5 -> {
-        System.out.println("Deleting a student:");
-        Student deleteStudent = new Student();
-        System.out.print("Enter student ID to delete: ");
-        deleteStudent.setId(scanner.nextInt());
-        if (studentDAO.deleteStudent(deleteStudent)) {
-          System.out.println("Student deleted successfully.");
-        } else {
-          System.out.println("Failed to delete student.");
+        looger.info("Deleting a student:" + ln);
+        looger.info("Enter student ID to delete: " + ln);
+        Long deleteId = scanner.nextLong();
+        Student studentToDelete = studentService.findStudentById(deleteId);
+        if (studentToDelete != null) {
+          studentService.deleteStudent(studentToDelete);
         }
       }
       case 6 -> {
-        System.out.println("Exiting the application. Goodbye!");
+        looger.info("Exiting the application. Goodbye!" + ln );
         exit = true;
       }
     }
     return exit;
   }
 
-  private void updateStudentMethod(Scanner scanner, IStudentService studentService, Student existingStudent, Student updateStudent) {
+  private void updateStudentMethod(
+      Scanner scanner,
+      IStudentService studentService,
+      Student existingStudent,
+      Student updateStudent) {
     if (existingStudent != null) {
+      scanner.nextLine();
       looger.info("Enter new details (leave blank to keep current value):" + ln);
-      System.out.print("Name (" + existingStudent.getName() + "): ");
-      String name = scanner.next();
+      looger.info("Name (" + existingStudent.getName() + "): ");
+      String name = scanner.nextLine();
       if (!name.isBlank()) {
         existingStudent.setName(name);
       }
-      System.out.print("Last Name (" + existingStudent.getLastName() + "): ");
-      String lastName = scanner.next();
+      looger.info("Last Name (" + existingStudent.getLastName() + "): ");
+      String lastName = scanner.nextLine();
       if (!lastName.isBlank()) {
         existingStudent.setLastName(lastName);
       }
-      System.out.print("Phone Number (" + existingStudent.getPhoneNumber() + "): ");
-      String phoneNumber = scanner.next();
+      looger.info("Phone Number (" + existingStudent.getPhoneNumber() + "): ");
+      String phoneNumber = scanner.nextLine();
       if (!phoneNumber.isBlank()) {
         existingStudent.setPhoneNumber(phoneNumber);
       }
-      System.out.print("Email (" + existingStudent.getEmail() + "): ");
-      String email = scanner.next();
+      looger.info("Email (" + existingStudent.getEmail() + "): ");
+      String email = scanner.nextLine();
       if (!email.isBlank()) {
         existingStudent.setEmail(email);
       }
@@ -154,7 +157,7 @@ public class StudentappwithspringbootApplication implements CommandLineRunner {
         looger.info("Failed to update student." + ln);
       }
     } else {
-        looger.info("Student not found with ID: " + updateStudent.getId() + ln);
+      looger.info("Student not found with ID: " + updateStudent.getId() + ln);
     }
   }
 }

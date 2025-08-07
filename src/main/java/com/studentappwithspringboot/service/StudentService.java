@@ -4,11 +4,13 @@ import com.studentappwithspringboot.model.Student;
 import com.studentappwithspringboot.repository.StudentRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StudentService implements IStudentService {
-  private StudentRepository studentRepository;
+  @Autowired
+  private  StudentRepository studentRepository;
 
   @Override
   public List<Student> getAllStudents() {
